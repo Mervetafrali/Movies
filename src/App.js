@@ -16,25 +16,23 @@ import './App.css';
 function App() {
   return (
     <Router>
-    <div className="App">
-      <Header/>
-      <div>
-        <Switch>
-          <Route exact path="/">
-            <SearchBar/>
-            <MovieList/>
-            
-          </Route>
-          <Route path="/detay">
-            <MovieDetail></MovieDetail>
+      <div className="App">
+        <Header />
+        <div>
+          <Switch>
+            <Route exact path="/">
+              <SearchBar />
+              <MovieList />
 
-          </Route>
-          
-        </Switch>
+            </Route>
+            <Route path="/detay">
+              <MovieDetail></MovieDetail>
+
+            </Route>
+
+          </Switch>
+        </div>
       </div>
-    
-     
-    </div>
     </Router>
   );
 }

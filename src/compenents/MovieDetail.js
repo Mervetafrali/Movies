@@ -4,9 +4,10 @@ import { withRouter, Link } from "react-router-dom";
 
 const MovieDetail = ({ location }) => {
 
+    //locationda gelen başka değeler de var, ileride kullanılabilir :)
 
     const movieList = useSelector(state => state.app.movies);
-
+    //filter gelen movie list içinde bizim movieid mizi bulmamız için kullanıyoruz true yada false döner
     const selectedMovie = movieList.filter(item => {
         if (item.imdbID === location.state.movieId) { return true; }
         return false;
