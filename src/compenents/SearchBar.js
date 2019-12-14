@@ -1,27 +1,44 @@
 import React, { Fragment, useState } from "react";
+import { useDispatch } from 'react-redux';
 
 const SearchBar = () => {
-  const [currentValue, setCurrentValue] = useState("");
+    const [currentValue, setCurrentValue] = useState("");
 
-  const _onClick = () => {
-      const result = fetch("https://www.omdbapi.com/?s=man&apikey=4a3b711b").then(result =>{
-      result.json().then(res=>{
-          console.log("currentValue Function Component :", res);
-      })    
-      
-      });
-    
-  };
-  //fetch asenkron çalıştığı için promise, beklemesi için then yazarız 
-  const _onChange = event => {
-    setCurrentValue(event.target.value);
-  };
-  return (
-    <Fragment>
-      <input onChange={_onChange} />
-      <button onClick={_onClick}>Search</button>
-    </Fragment>
-  );
+    // hook kullanıldığında , connect ile aynı işlece sahiptir(dispacth gönderme açısından)
+    const dispatch = useDispatch();
+    const _onClick = async () => {
+        dispatch({ type: "movie/request" });
+        try {
+
+            const result = await fetch(`https://www.omdbapi.com/?s=${currentValue}&apikey=4a3b711b`);
+            const res = await result.json();
+            dispatch({ type: "movie/success", data: res.Search });
+        } catch (error) {
+            alert("Opps!");
+        }
+
+        //promise ile kullanım s
+        /* fetch(`https://www.omdbapi.com/?s=${currentValue}&apikey=4a3b711b`).then(
+             result => {
+             result.json().then(res => {
+                 dispatch({type:"movie/success",data:res.Search});
+                 
+             });
+ 
+         }
+         );*/
+
+    };
+    //fetch asenkron çalıştığı için promise, beklemesi için then yazarız 
+    const _onChange = event => {
+        setCurrentValue(event.target.value);
+    };
+    return (
+        <Fragment>
+            <input onChange={_onChange} />
+            <button onClick={_onClick}>Search</button>
+        </Fragment>
+    );
 };
 
 // class SearchBarClass extends React.Component {
@@ -50,6 +67,8 @@ const SearchBar = () => {
 //     );
 //   }
 // }
+
+//export default connect()(SearchBar);
 
 export default SearchBar;
 
