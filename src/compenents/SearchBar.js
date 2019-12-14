@@ -4,9 +4,15 @@ const SearchBar = () => {
   const [currentValue, setCurrentValue] = useState("");
 
   const _onClick = () => {
-    console.log("currentValue Function Component :", currentValue);
+      const result = fetch("https://www.omdbapi.com/?s=man&apikey=4a3b711b").then(result =>{
+      result.json().then(res=>{
+          console.log("currentValue Function Component :", res);
+      })    
+      
+      });
+    
   };
-
+  //fetch asenkron çalıştığı için promise, beklemesi için then yazarız 
   const _onChange = event => {
     setCurrentValue(event.target.value);
   };
